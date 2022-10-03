@@ -10,6 +10,24 @@ const db = mysql.createConnection({
     database: 'employee_db'
 });
 
+db.connect((err) => {
+    if (err) {
+        throw err;
+    } else {
+        successConnect();
+    }
+    
+})
+
+function successConnect () {
+    console.log('-------------------------------')
+    console.log('|                             |')
+    console.log('|          WELCOME,           |')
+    console.log('|      EMPLOYEE MANAGER!      |')
+    console.log('|                             |')
+    console.log('-------------------------------')
+}
+
 const userChoices = () => {
     inquirer.prompt ([
         {
@@ -25,4 +43,27 @@ const userChoices = () => {
             'Update an employee role']
         }
     ])
+    .then ((answer) => {
+        if (answer === 'View all departments') {
+            displayDepartments();
+        
+        } else if (answer === "View all roles") {
+            displayRoles();
+
+        } else if (answer === "View all employees") {
+            displayEmployees();
+
+        } else if (answer === 'Add a department') {
+            addDepartment();
+
+        } else if (answer === 'Add a role') {
+            addRole();
+
+        } else if (answer === "Add an employee") {
+            addEmployee();
+            
+        } else if (answer === "Update an employee role") {
+            updateEmployee();
+        }
+    })
 }
