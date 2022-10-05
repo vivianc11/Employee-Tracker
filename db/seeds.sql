@@ -19,7 +19,7 @@ VALUES
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
 ('John', 'Smith', 1, null),
-('Mike', 'Chan', 2, 1,
+('Mike', 'Chan', 2, 1),
 ('Ashley', 'Rodriquez', 3, null),
 ('Kevin', 'Malone', 4, 2),
 ('Kunal', 'Singh', 5, null),
