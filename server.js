@@ -61,9 +61,39 @@ const userChoices = () => {
 
         } else if (answer === "Add an employee") {
             addEmployee();
-            
+
         } else if (answer === "Update an employee role") {
             updateEmployee();
         }
     })
 }
+
+// Function to show all departments
+function displayDepartments () {
+
+};
+
+// Function to show all roles
+function displayRoles () {
+
+};
+
+// Function to show all employees
+function displayEmployees () {
+
+};
+
+// Function to add a department
+function addDepartment () {
+
+};
+
+// Function to add an employee
+function addEmployee () {
+
+};
+
+// Function to update an employee
+function updateEmployee () {
+
+};
