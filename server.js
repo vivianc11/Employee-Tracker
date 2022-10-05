@@ -142,7 +142,6 @@ function addDepartment () {
             if (err) throw err;
             console.log(`${response.department} Department is successfully added!`)
             displayDepartments();
-            promptUserChoices();
         })
     })
 };

@@ -46,4 +46,4 @@ THEN I am prompted to select an employee to update and their new role and this i
 - Establishing a successful connection to MySQL database in a JS file using MySQL2
 
 ## Walkthrough Video
-
+https://drive.google.com/file/d/16gyeFigxg4WSwttGIS06Ny8TuTik6mAI/view
