@@ -80,35 +80,76 @@ function displayDepartments () {
     db.query(mysqlDepartment, (err, data) => {
         if (err) throw err;
         console.table(data);
+        promptUserChoices();
     });
-    promptUserChoices();
+    
 };
 
 // Function to show all roles
 function displayRoles () {
     console.log('Here are all the roles:\n')
-    const mysqlRoles = `SELECT id AS Role_ID, title AS Title, salary AS Salary FROM role;`
+    const mysqlRoles = `SELECT title AS Title, role.id AS Role_ID, department.name AS Department, salary AS Salary FROM role JOIN department ON role.department_id = department.id;`
 
     db.query(mysqlRoles, (err, data) => {
         if (err) throw err;
         console.table(data);
+        promptUserChoices();
     });
-    promptUserChoices();
+    
 };
 
 // Function to show all employees
 function displayEmployees () {
+    console.log('Here are all the employees:\n')
+    const mysqlEmployees = `SELECT employee.id AS EmployeeID, 
+                            employee.first_name AS FirstName, 
+                            employee.last_name AS LastName, 
+                            role.title AS Title, 
+                            department.name AS Department, 
+                            role.salary AS Salary, 
+                            CONCAT(manager.first_name, ' ', manager.last_name) AS Manager 
+                            FROM employee 
+                            LEFT JOIN role ON employee.role_id = role.id
+                            LEFT JOIN department ON role.department_id = department.id
+                            LEFT JOIN employee manager ON employee.manager_id = manager.id;`
 
+    db.query(mysqlEmployees, (err, data) => {
+        if(err) throw err;
+        console.table(data);
+        promptUserChoices();
+    })
 };
 
 // Function to add a department
 function addDepartment () {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'department',
+            message: 'What is the new department name?'
+        }
+    ])
+    .then((response) => {
+        db.query(`INSERT INTO department (name) VALUE ${response.department};`)
 
+        function Error (err) {
+            if (err) throw err;
+            console.log(`${response.department} Department is successfully added!`)
+            promptUserChoices();
+        }
+    })
 };
 
 // Function to add an employee
 function addEmployee () {
-
+    const roleChoices = [];
+    db.query('SELECT * FROM role;', function (err, roles) {
+        if (err) throw err;
+        for (let i = 0; i < roles.length; i++) {
+            let listOfRoles = roles[i].name;
+            roleChoices.push(listOfRoles);
+        }
+    })
 };
 
 // Function to update an employee
