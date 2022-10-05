@@ -5,6 +5,7 @@ const inquirer = require('inquirer');
 
 const db = mysql.createConnection({
     host: 'localhost',
+    port: 3306,
     user: 'root',
     password: '',
     database: 'employee_db'
@@ -15,6 +16,7 @@ db.connect((err) => {
         throw err;
     } else {
         successConnect();
+        promptUserChoices();
     }
     
 })
@@ -28,7 +30,9 @@ function successConnect () {
     console.log('-------------------------------')
 }
 
-const userChoices = () => {
+
+
+const promptUserChoices = () => {
     inquirer.prompt ([
         {
             type: 'list',
@@ -44,25 +48,25 @@ const userChoices = () => {
         }
     ])
     .then ((answer) => {
-        if (answer === 'View all departments') {
+        if (answer.userChoices === 'View all departments') {
             displayDepartments();
         
-        } else if (answer === "View all roles") {
+        } else if (answer.userChoices === "View all roles") {
             displayRoles();
 
-        } else if (answer === "View all employees") {
+        } else if (answer.userChoices === "View all employees") {
             displayEmployees();
 
-        } else if (answer === 'Add a department') {
+        } else if (answer.userChoices === 'Add a department') {
             addDepartment();
 
-        } else if (answer === 'Add a role') {
+        } else if (answer.userChoices === 'Add a role') {
             addRole();
 
-        } else if (answer === "Add an employee") {
+        } else if (answer.userChoices === "Add an employee") {
             addEmployee();
 
-        } else if (answer === "Update an employee role") {
+        } else if (answer.userChoices === "Update an employee role") {
             updateEmployee();
         }
     })
@@ -70,12 +74,26 @@ const userChoices = () => {
 
 // Function to show all departments
 function displayDepartments () {
+    console.log('Here are all the departments:\n')
+    const mysqlDepartment = `SELECT department.id AS ID, department.name AS Department FROM department;`;
 
+    db.query(mysqlDepartment, (err, data) => {
+        if (err) throw err;
+        console.table(data);
+    });
+    promptUserChoices();
 };
 
 // Function to show all roles
 function displayRoles () {
+    console.log('Here are all the roles:\n')
+    const mysqlRoles = `SELECT id AS Role_ID, title AS Title, salary AS Salary FROM role;`
 
+    db.query(mysqlRoles, (err, data) => {
+        if (err) throw err;
+        console.table(data);
+    });
+    promptUserChoices();
 };
 
 // Function to show all employees
@@ -97,3 +115,4 @@ function addEmployee () {
 function updateEmployee () {
 
 };
+
